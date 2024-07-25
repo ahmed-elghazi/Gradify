@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results Page</title>
+    <link rel="stylesheet" type="text/css" href="styles4.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <div class="course-info">
+                <h1>CS 101</h1>
+            </div>
+            <form action="">
+                <input type="search" placeholder="Enter the Course ID" id="course-search">
+                <button type="submit" class="fa fa-search"></button>
+            </form>
+        </div>
+        <div class="main-content">
+            <div class="sidebar">
+                <ul id="professor-list">
+                    <li>
+                        <button class="collapsible" data-a-percentages='[90, 85, 80, 75]'>
+                            Omar Hamdy
+                        </button>
+                        <div class="collapsible-content">
+                            <p>Rating: 4.5</p>
+                            <p>Quality: High</p>
+                            <p>Take Again: 85%</p>
+                        </div>
+                    </li>
+                    <!-- Add more mock data as needed -->
+                </ul>
+            </div>
+            <div class="content">
+                <div class="chart-container">
+                    <canvas id="grade-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Mock data as if retrieved from Flask
+        const professorData = [
+            {
+                "name": "Omar Hamdy",
+                "rating": 4.5,
+                "quality": "High",
+                "take_again": "85%",
+                "a_percentages": [90, 85, 80, 75]
+            },
+            // Add more mock data as needed
+        ];
+        
+        // Populate the professor list
+        const professorList = document.getElementById('professor-list');
+        professorData.forEach(professor => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <button class="collapsible" data-a-percentages='${JSON.stringify(professor.a_percentages)}'>
+                    ${professor.name}
+                </button>
+                <div class="collapsible-content">
+                    <p>Rating: ${professor.rating}</p>
+                    <p>Quality: ${professor.quality}</p>
+                    <p>Take Again: ${professor.take_again}</p>
+                </div>
+            `;
+            professorList.appendChild(li);
+        });
+
+        // Add event listeners to collapsible buttons
+        const collapsibles = document.querySelectorAll('.collapsible');
+        collapsibles.forEach(button => {
+            button.addEventListener('click', () => {
+                // Close any other open collapsibles
+                collapsibles.forEach(btn => {
+                    if (btn !== button) {
+                        btn.classList.remove('active');
+                        btn.nextElementSibling.style.display = "none";
+                    }
+                });
+
+                // Toggle the clicked collapsible
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                    updateChart(JSON.parse(button.getAttribute('data-a-percentages')));
+                }
+            });
+        });
+
+        // Function to update the chart
+        function updateChart(aPercentages) {
+            chart.data.datasets[0].data = aPercentages;
+            chart.update();
+        }
+
+        // Initialize the chart
+        const ctx = document.getElementById('grade-chart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["4.0", "Pass", "Fail", "Withdraw"],
+                datasets: [{
+                    label: 'A%',
+                    data: [],  // Start with an empty data array
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#fbfbff' // Set the color of y-axis labels to black
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#fbfbff' // Set the color of x-axis labels to black
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#fbfbff' // Set the color of legend labels to black
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Grade Distribution',
+                        color: '#fbfbff' // Set the color of the title text to black
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

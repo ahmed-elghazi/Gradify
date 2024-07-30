@@ -10,7 +10,7 @@ import re
 # There is no testing for incorrect inputs (CSSSS instead of CS3345)
 # Parallel thread execution needs to be implemented for query's & RMP
 # APP.PY file is too large and needs to be broken down into smaller files
-# No sorting buttons
+# No sorting buttons.
 # Use coursebook-master-api?
 
 app = Flask(__name__)
@@ -23,12 +23,14 @@ def home():
 def results():
     course_id = request.args.get('courseID')
     professors = getProfessors(course_id)  # Fetch professors based on course ID
+    if(professors == "error"):
+        Error = "Invalid Course ID"
+        return render_template('error.html', error=Error)
     all_professor_info = []
     chart_data = {
         "professors": [],
         "a_percentages": []
     }
-    print(professors)
     for professor in professors:
         professor_info = testAPI(professor)
         if professor_info:
@@ -38,12 +40,11 @@ def results():
             quality = professor_info[3]
             take_again = professor_info[4]
             a_percentage = hitTheDB(first_name + " " + last_name)
-            print(first_name + " " + last_name)
 
             if take_again != "N/A":
                 try:
                     take_again = float(take_again)
-                    take_again = f"{take_again:.2f}"
+                    take_again = f"{take_again:.0f}%"
                 except ValueError:
                     take_again = "N/A"
             

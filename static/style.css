@@ -1,15 +1,18 @@
-*{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Kanit', sans-serif;
 }
 
-.container{
+.container {
     width: 100%;
     min-height: 100vh;
     padding: 5%;
-    background-image: linear-gradient(rgba(0,8,51,0.9), rgba(0,8,51,0.9)), url('images/bg.jpg');
+    background-image: linear-gradient(rgba(19,19,26,1), rgba(11,79,108,1)), url('images/bg.jpg');
     background-position: center;
     background-size: cover;
     display: flex;
@@ -17,39 +20,89 @@
     justify-content: center;
 }
 
-.search-bar{
+.search-bar {
     width: 100%;
     max-width: 700px;
-    background: (rgba(255,255,255,0.2));
+    background: rgba(255,255,255,0.2);
     display: flex;
     align-items: center;
     border-radius: 60px;
     padding: 10px 20px;
     backdrop-filter: blur(4px) saturate(80%);
+    position: relative;
 }
 
-.search-bar input{
+.search-bar input {
     background: transparent;
     flex: 1;
     border: 0;
     outline: none;
     padding: 24px 20px;
     font-size: 20px;
-    color: white;
+    color: #FBFBFF;
 }
 
-::placeholder{
-    color: white;
+.search-bar select {
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 24px 20px;
+    font-size: 20px;
+    color: #FBFBFF;
+    appearance: none;
+    -webkit-appearance: none;
 }
 
-.search-bar button img{
+.search-bar select option {
+    background-color: #333;
+    color: #FBFBFF;
+}
+
+.search-bar select:focus {
+    border: none;
+    outline: none;
+}
+
+.search-bar::after {
+    content: '\f078'; /* FontAwesome Unicode */
+    font-family: 'Font Awesome 5 Free';
+    position: absolute;
+    right: 20px;
+    color: #FBFBFF;
+}
+
+::placeholder {
+    color: #FBFBFF;
+}
+
+.search-bar button img {
     width: 25px;
 }
 
-.search-bar button{
+.search-bar button {
     border: 0;
     border-radius: 50%;
     width: 60px;
     height: 60px;
     cursor: pointer;
+}
+
+.fa {
+    box-sizing: border-box;
+    padding: 10px;
+    width: 42.5px;
+    height: 42.5px;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    color: #8c52ff;
+    text-align: center;
+    font-size: 1.2em;
+    transition: all 1s;
+}
+
+form:hover .fa {
+    background: #8c52ff;
+    color: #FBFBFF;
 }

@@ -6,6 +6,9 @@
     <title>Results Page</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles4.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -13,12 +16,8 @@
             <div class="course-info">
                 <h1>{{courseID}}</h1>
             </div>
-            <!-- <form action="">
-                <input type="search" placeholder="Search here ..." id="course-search">
-                <i class="fa fa-search" onclick="fetchProfessors()"></i>
-            </form> -->
             <form action="{{ url_for('results') }}" method="get">
-                <input type="search" name="courseID" placeholder="Search here ..." id="course-search">
+                <input type="search" name="courseID" placeholder="Search a new Course ID ..." id="course-search" required>
                 <button type="submit" class="fa fa-search"></button>
             </form>
         </div>
@@ -93,19 +92,19 @@
             data: {
                 labels: ["4.0", "Pass", "Fail", "Withdraw"],
                 datasets: [{
-                    label: 'A%',
+                    label: '',  // Leave this empty to avoid displaying any label
                     data: [],  // Start with an empty data array
                     backgroundColor: [
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)'
+                        'rgba(245, 42, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.2)'
                     ],
                     borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)',
                         'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)'
+                        'rgba(245, 42, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
                     ],
                     borderWidth: 1
                 }]
@@ -115,7 +114,64 @@
                 responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#fbfbff', // Set the color of y-axis labels to white
+                            font: {
+                                family: 'Kanit', // Font family
+                                size: 20 // Font size
+                            }
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#fbfbff', // Set the color of x-axis labels to white
+                            font: {
+                                family: 'Kanit', // Font family
+                                size: 20 // Font size
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Grade Distribution',
+                        color: '#fbfbff', // Set the color of the title text to white
+                        font: {
+                            family: 'Kanit', // Font family
+                            size: 22 // Font size
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y + '%'; // Show as percentage
+                                }
+                                return label;
+                            }
+                        },
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        titleFont: {
+                            family: 'Kanit', // Font family
+                            size: 20 // Font size for tooltip title
+                        },
+                        bodyFont: {
+                            family: 'Kanit', // Font family
+                            size: 20 // Font size for tooltip body
+                        },
+                        footerFont: {
+                            family: 'Kanit', // Font family
+                            size: 20 // Font size for tooltip footer
+                        }
                     }
                 }
             }

@@ -4,57 +4,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UTD Grade Finder</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <!-- Include React and ReactDOM -->
-    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <div id="app"></div>
-
-    <script type="text/babel">
-        class App extends React.Component {
-            constructor(props) {
-                super(props);
-                this.state = {
-                    courseID: '',
-                    result: null,
-                };
-
-                this.handleInputChange = this.handleInputChange.bind(this);
-                this.handleSubmit = this.handleSubmit.bind(this);
-            }
-
-            handleInputChange(event) {
-                this.setState({ courseID: event.target.value });
-            }
-
-            handleSubmit(event) {
-                event.preventDefault();
-                const url = `/results?courseID=${this.state.courseID}`;
-                window.location.href = url;
-            }
-
-            render() {
-                return (
-                    <div className="container">
-                        <form onSubmit={this.handleSubmit} className="search-bar">
-                            <input
-                                type="text"
-                                placeholder="Enter the Course ID"
-                                name="courseID"
-                                value={this.state.courseID}
-                                onChange={this.handleInputChange}
-                                required
-                            />
-                            <button type="submit">Search</button>
-                        </form>
-                    </div>
-                );
-            }
-        }
-
-        ReactDOM.render(<App />, document.getElementById('app'));
+    <div class="container">
+        <form id="searchForm" class="search-bar" autocomplete="off">
+            <input type="text" placeholder="Enter the Course ID" name="courseID" id="courseID" required/>
+            <button type="submit" class="fa fa-search"></button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const courseID = document.getElementById('courseID').value;
+            const url = `/results?courseID=${courseID}`;
+            window.location.href = url;
+        });
     </script>
 </body>
 </html>

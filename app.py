@@ -64,7 +64,7 @@ def results():
     formatted_code = f"{letters} {numbers}"
         
     
-    return render_template('results4.html', professors=all_professor_info, chartData=chart_data, courseID = formatted_code)
+    return render_template('results.html', professors=all_professor_info, chartData=chart_data, courseID = formatted_code)
 
 
 if __name__ == '__main__':

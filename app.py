@@ -101,7 +101,5 @@ if __name__ == '__main__':
 #Efficiency:
 # Use a dictionary to store the professors and their ratings
 # Update the table directly instead of reading into placeholder that gets returned from function
-# Directly seat the information in a data base (How would you update it regularly?)
-# Only read up until instructor 1, if the professor is not in instructor 1, then it does not matter
+# Directly seat the coursebok info in a data base (How would you update it regularly?)
 # Make the code not use a visual GUI and instead use a headless browser
-# Use PostGreSQL or something

@@ -1,8 +1,5 @@
-Thank you for the correction. Here's the updated README with the correct structure:
 
----
-
-# Dynamic Coursebook and Professor Rating System
+# Gradify
 
 ## Overview
 

@@ -1,7 +1,3 @@
-Here's a formatted version of your `improvements.txt` file for better readability:
-
----
-
 # Problems
 
 - **Professor Availability**: If the professor does not exist on Rate My Professors (RMP), they are not shown in any list.

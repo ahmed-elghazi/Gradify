@@ -10,20 +10,7 @@ from bs4 import BeautifulSoup  # For parsing HTML
 import re  # Regex module for string matching
 import glob  # For file pattern matching
 
-chrome_options = webdriver.ChromeOptions() 
-chrome_options.add_argument("--headless")  # Run Chrome in headless mode (no GUI)
-chrome_options.add_argument("--disable-gpu")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--disable-images")
-chrome_options.add_argument("--disable-javascript")
-chrome_options.add_argument("start-maximized")
-chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-chrome_options.add_experimental_option('useAutomationExtension', False)
-
 def getProfessors(course):
-    print("Searching for professors who teach " + course + "...")
-    start_time = time.time()  # Track start time for performance logging
-
     coursebookDriver = webdriver.Chrome(options = Options())  # Launch Chrome in headless mode
     coursebookDriver.get("https://coursebook.utdallas.edu/guidedsearch")  # Open the coursebook search page
     time.sleep(1)  # Allow the page to load
@@ -38,7 +25,6 @@ def getProfessors(course):
     Results = coursebookDriver.find_element(By.XPATH, '//*[@id="searchresults"]/b')  # Check for search results
 
     if("no items found" in Results.text):  # Handle case where no results are found
-        print("No results found for " + course)
         return "error"
     
     table = coursebookDriver.find_element(By.XPATH, '//*[@id="sr"]/div/table').text  # Extract the table text containing professor info
@@ -48,12 +34,3 @@ def getProfessors(course):
     professors = set(re.findall(pattern, table))  # Use a set to eliminate duplicate entries
     coursebookDriver.quit()  # Close the ChromeDriver session
     return professors  # Return the set of professor names
-
-def main():
-    start_t = time.time()  # Track start time for overall execution
-    getProfessors("CS3345")  # Test the function with a specific course ID
-    print("OVERALL: ")
-    print(+ time.time() - start_t)  # Log the total time taken
-
-if(__name__ == "__main__"):
-    main()  # Execute the main function when the script is run directly

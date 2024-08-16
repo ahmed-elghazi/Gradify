@@ -21,8 +21,3 @@ def hitTheDB(name: str):
         "Fail": round((document['ratings']['Fail'] / total) * 100),  # Calculate percentage of Fail ratings
         "Withdraw": round((document['ratings']['Withdraw'] / total) * 100)  # Calculate percentage of Withdraw ratings
     }
-    #print(list)  # Print the calculated percentages
-    return list  # Return the list of percentages
-
-if(__name__ == "__main__"):
-    hitTheDB("Jason Smith")

@@ -3,7 +3,7 @@ from pymongo import MongoClient  # Import for MongoDB connection
 from pymongo.server_api import ServerApi  # Import for specifying server API version
 
 def hitTheDB(name: str):
-    uri = ""  # MongoDB connection URI redacted
+    uri = "mongodb+srv://github:XYDhRYbc0KGMb6BN@courses-profs.locvj1l.mongodb.net/?retryWrites=true&w=majority&appName=Courses-Profs"  # MongoDB connection URI redacted
     client = MongoClient(uri, server_api=ServerApi('1'))  # Connect to MongoDB server
     db = client['university_db']  # Access the database
     collection = db['instructors']  # Access the instructors collection
@@ -21,3 +21,4 @@ def hitTheDB(name: str):
         "Fail": round((document['ratings']['Fail'] / total) * 100),  # Calculate percentage of Fail ratings
         "Withdraw": round((document['ratings']['Withdraw'] / total) * 100)  # Calculate percentage of Withdraw ratings
     }
+    return list  # Return the list of grade percentages
